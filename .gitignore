@@ -27,5 +27,8 @@ token.pickle
 *.twbr
 *.hyper
 
-# Output files (optional - you might want to keep these)
-graphs/ 
+# Output files
+graphs/
+
+# Logs
+*.log 

@@ -1,7 +1,7 @@
 # Life in Weeks Visualization
 
-This project creates a visualization of your life in weeks, inspired by the article ["How to Visualize the Rest of Your Life"](https://medium.com/towards-data-science/how-to-visualize-the-rest-of-your-life-28f943b1f70b) by Dr. Gregor Scheithauer. The visualization represents each week of your life as a cross, with:
-- Blue crosses representing weeks you've lived
+This project creates a visualization of my life in weeks (updated weekly), inspired by the article ["How to Visualize the Rest of Your Life"](https://medium.com/towards-data-science/how-to-visualize-the-rest-of-your-life-28f943b1f70b) by Dr. Gregor Scheithauer. The visualization represents each week of your life as a cross, with:
+- Blue crosses representing weeks I've lived
 - Grey crosses representing weeks remaining
 - A red cross indicating the current week
 
@@ -116,7 +116,10 @@ Feel free to fork this project and submit pull requests for improvements or bug 
 
 ## Dashboard Live in Tableau Public
 
-- Link to my production dashboard (based on my lifespan) located here (https://public.tableau.com/app/profile/wilson.teng7303/viz/YourLifeinWeeks/Dashboard1#1)
+My life in weeks visualization is available on Tableau Public:
+- [View the live dashboard](https://public.tableau.com/app/profile/wilson.teng7303/viz/MyLifeinWeeks_17384989280950/Dashboard1)
+
+![Life in Weeks Visualization](images/tableau_viz.png)
 
 ## Acknowledgments
 
