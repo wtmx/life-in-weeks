@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+ENV/
+
+# Credentials and tokens
+credentials.json
+token.pickle
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Tableau
+*.twb
+*.twbr
+*.hyper
+
+# Output files (optional - you might want to keep these)
+graphs/ 
