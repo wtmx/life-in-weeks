@@ -19,96 +19,97 @@ This project extends the original concept by:
 - Python 3.x
 - Virtual environment (recommended)
 - Google Cloud Console account
+- Gmail account (for notifications)
 - Tableau Desktop (for development)
 - Tableau Public account (for publishing)
 
-### Dependencies
+### Initial Setup
+
+1. Clone the repository and create a virtual environment:
+```bash
+git clone https://github.com/wtmx/life-in-weeks.git
+cd life-in-weeks
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+2. Install dependencies:
 ```bash
 pip install pandas numpy altair google-auth google-auth-oauthlib google-auth-httplib2 google-api-python-client
 ```
 
-### Google Cloud Setup
+### Google Drive Setup
 1. Create a project in Google Cloud Console
 2. Enable the Google Drive API
-3. Create OAuth 2.0 credentials
+3. Create OAuth 2.0 credentials (Desktop application)
 4. Download credentials and save as `credentials.json` in project directory
 5. Add your Google account as a test user in OAuth consent screen
+
+### Email Notification Setup
+1. Create a Gmail App Password:
+   - Go to your [Google Account Security settings](https://myaccount.google.com/security)
+   - Enable 2-Step Verification if not already enabled
+   - Go to [App Passwords](https://myaccount.google.com/apppasswords)
+   - Select "Other (Custom name)" and enter "Life in Weeks"
+   - Copy the generated 16-character password
+
+2. Set up environment variables:
+   ```bash
+   cp .env.template .env
+   ```
+   Edit `.env` and add your:
+   - Gmail address as `NOTIFICATION_EMAIL`
+   - App Password as `NOTIFICATION_PASSWORD`
+
+### Automation Setup
+
+1. Create the update script:
+```bash
+cp update_life_weeks.sh.template update_life_weeks.sh
+chmod +x update_life_weeks.sh
+```
+
+2. Set up the cron job (runs every Sunday at midnight):
+```bash
+crontab -e
+```
+Add the line:
+```
+0 0 * * 0 cd /path/to/life-in-weeks && ./update_life_weeks.sh
+```
 
 ## Project Structure
 ```
 life-in-weeks/
-├── life.py                 # Main script for visualization and data generation
-├── gdrive_upload.py        # Google Drive upload functionality
-├── update_life_weeks.sh    # Shell script for automated updates
-├── credentials.json        # Google Cloud credentials (not in repo)
-├── graphs/                 # Output directory
-│   ├── output.html        # Altair visualization
-│   └── life_in_weeks.csv  # Data file for Tableau
-└── README.md              # This file
+├── life.py                    # Main script for visualization and data generation
+├── gdrive_upload.py          # Google Drive upload functionality
+├── email_notifier.py         # Email notification functionality
+├── update_life_weeks.sh      # Shell script for automated updates
+├── .env                      # Environment variables (not in repo)
+├── credentials.json          # Google Cloud credentials (not in repo)
+├── graphs/                   # Output directory
+│   ├── output.html          # Altair visualization
+│   └── life_in_weeks.csv    # Data file for Tableau
+└── README.md                # This file
 ```
-
-## Features
-
-### Python Script (`life.py`)
-- Calculates weeks lived and remaining based on birth date and life expectancy
-- Generates an interactive visualization using Altair
-- Creates a structured CSV file with detailed week information
-
-### Google Drive Integration (`gdrive_upload.py`)
-- Authenticates with Google Drive API
-- Automatically uploads CSV file
-- Creates/updates public sharing link
-- Enables live data connection for Tableau Public
-
-### Automated Updates (`update_life_weeks.sh`)
-- Shell script for running weekly updates
-- Manages virtual environment activation
-- Handles script execution and environment cleanup
-
-## Tableau Integration
-
-### Local Development
-1. Open Tableau Desktop
-2. Connect to Web Data (Google Drive CSV URL)
-3. Create visualization using:
-   - Week (Columns)
-   - Year (Rows)
-   - Label (Color)
-   - Square mark type
-
-### Tableau Public Publishing
-Since Tableau Public has limitations on live data connections, this project uses Google Drive as an intermediary:
-1. CSV is automatically uploaded to Google Drive
-2. Tableau Public connects to the Google Drive URL
-3. Dashboard refreshes automatically when source file updates
-
-## Automation Setup
-
-To set up automatic weekly updates:
-
-1. Make the shell script executable:
-```bash
-chmod +x update_life_weeks.sh
-```
-
-2. Add to crontab (runs every Sunday at midnight):
-```bash
-0 0 * * 0 cd /path/to/life-in-weeks && ./update_life_weeks.sh
-```
-
-## Customization
-
-Edit `life.py` to modify:
-- Birth date
-- Life expectancy
-- Visualization parameters
-- Color scheme
 
 ## Security Notes
 
 - Keep `credentials.json` secure and never commit to version control
+- The `.env` file containing email credentials is excluded from Git
 - The Google Drive file is publicly readable but not writable
 - OAuth credentials are stored locally in `token.pickle`
+
+## Monitoring and Logs
+
+The automation process creates several log files:
+- `cron.log` - Overall script execution logs
+- `gdrive_upload.log` - Google Drive upload logs
+- `email_notifier.log` - Email notification logs
+
+You'll receive email notifications for:
+- Successful uploads (with file ID and public URL)
+- Any errors during the process (with detailed logs)
 
 ## Contributing
 

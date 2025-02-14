@@ -10,6 +10,7 @@ ENV/
 # Credentials and tokens
 credentials.json
 token.pickle
+.env
 
 # IDE
 .idea/

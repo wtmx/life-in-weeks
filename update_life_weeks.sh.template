@@ -1,0 +1,59 @@
+#!/bin/bash
+
+# Set error handling
+set -e
+
+# Get the script directory
+SCRIPT_DIR="$(dirname "$0")"
+LOG_FILE="$SCRIPT_DIR/cron.log"
+
+# Set email notification environment variables
+export NOTIFICATION_EMAIL="your.email@gmail.com"  # Replace with your Gmail
+export NOTIFICATION_PASSWORD="your-app-password"  # Replace with your app-specific password
+
+# Function for logging
+log() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" >> "$LOG_FILE"
+}
+
+log "Starting Life in Weeks update script"
+
+# Change to script directory
+cd "$SCRIPT_DIR"
+log "Changed to directory: $(pwd)"
+
+# Activate virtual environment
+log "Activating virtual environment"
+source venv/bin/activate
+if [ $? -ne 0 ]; then
+    log "ERROR: Failed to activate virtual environment"
+    exit 1
+fi
+
+# Check if credentials exist
+if [ ! -f "credentials.json" ]; then
+    log "ERROR: credentials.json not found"
+    exit 1
+fi
+
+# Run the Python script
+log "Running life.py"
+python life.py 2>> "$LOG_FILE"
+RESULT=$?
+
+if [ $RESULT -eq 0 ]; then
+    log "Successfully completed update"
+else
+    log "ERROR: Python script failed with exit code $RESULT"
+fi
+
+# Deactivate virtual environment
+deactivate
+log "Deactivated virtual environment"
+
+# Clear email environment variables
+unset NOTIFICATION_EMAIL
+unset NOTIFICATION_PASSWORD
+
+log "Update script completed"
+echo "----------------------------------------" 
