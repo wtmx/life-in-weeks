@@ -118,7 +118,7 @@ Feel free to fork this project and submit pull requests for improvements or bug 
 ## Dashboard Live in Tableau Public
 
 My life in weeks visualization is available on Tableau Public:
-- [View the live dashboard](https://public.tableau.com/app/profile/wilson.teng7303/viz/MyLifeinWeeks_17384989280950/Dashboard1)
+- [View the live dashboard](https://public.tableau.com/app/profile/wilson.teng4929/viz/MyLifeinWeeks_17395439428740/Dashboard1)
 
 ![Life in Weeks Visualization](images/tableau_viz.png)
 
